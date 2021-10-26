@@ -2,7 +2,7 @@ const service = require('express').Router()
 const MessageResponse = require('../../Utils/Response/response.js')
 const { VerifyToken } = require('../../Middleware/JWT/jwt.js')
 const { GetUsers, GetUsersById } = require('./user_repo.js')
-const IsInputNullOrEmpty = require('../../Utils/Handler/handler.js')
+const {IsInputNullOrEmpty} = require('../../Utils/Handler/handler.js')
 
 service.get('/users', async function(request, response){
     try{

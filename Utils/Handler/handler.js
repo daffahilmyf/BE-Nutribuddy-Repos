@@ -1,3 +1,5 @@
+const validator = require('email-validator')
+
 function isInputNull(... data){
     for(i= 0; i < data.length; i++){
         if(data[i] == null){
@@ -29,4 +31,8 @@ function IsInputNullOrEmpty(... data){
     return false
 }
 
-module.exports = IsInputNullOrEmpty
+function IsEmailValid(email){
+    return validator.validate(email)
+}
+
+module.exports = { IsInputNullOrEmpty, IsEmailValid }
