@@ -6,6 +6,7 @@ const MessageResponse = require('./Utils/Response/response.js')
 const API_V1 = require('./Router/API-V1/route_v1.js')
 const bodyParser = require('body-parser')
 
+
 const server = express()
 const PORT = process.env.PORT || 5000
 const dbConn = new MongoConn(process.env.NODE_ENV)
@@ -16,6 +17,6 @@ server.use(bodyParser.urlencoded({extended: true}))
 server.use('/', API_V1)
 
 server.get('/', (req, res)=>{
-    MessageResponse(res, 201, 'asu', [{"data": "asu"}])
+    res.send('Hello World')
 })
 server.listen(PORT, () => console.debug(`Server running on port: ${PORT}`))

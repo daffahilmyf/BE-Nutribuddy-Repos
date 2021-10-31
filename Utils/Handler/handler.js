@@ -25,6 +25,7 @@ function IsInputNullOrEmpty(... data){
             return true
         }
     }
+    
 
     return false
 }
