@@ -2,7 +2,7 @@ const service = require('express').Router()
 const { LoginRepos, RegisterRepos } = require('./auth_repo.js')
 const jwt = require('../../Middleware/JWT/jwt.js')
 const MessageResponse = require('../../Utils/Response/response.js')
-const IsInputNullOrEmpty = require('../../Utils/Handler/handler.js')
+const {IsInputNullOrEmpty, IsEmailValid} = require('../../Utils/Handler/handler.js')
 
 
 service.post('/login', async function (request, response){
@@ -39,6 +39,10 @@ service.post('/register', async function(request, response){
 
     try{
         if(!IsInputNullOrEmpty(firstname, lastname, phone_number, email, password)){
+
+            if(!IsEmailValid(email)){
+                return MessageResponse(response, 406, 'Email is not valid')
+            }
 
             const isRegistered = await RegisterRepos(firstname, lastname, phone_number, email, password)
 
