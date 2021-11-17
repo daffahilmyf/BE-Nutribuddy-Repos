@@ -1,13 +1,17 @@
 const service = require('express').Router()
 const MessageResponse = require('../../Utils/Response/response.js')
 const { VerifyToken } = require('../../Middleware/JWT/jwt.js')
-const { GetUsers, GetUsersById } = require('./user_repo.js')
+const { GetUsers, GetUsersById, GetUsersBySearch } = require('./user_repo.js')
 const {IsInputNullOrEmpty} = require('../../Utils/Handler/handler.js')
 
 service.get('/users', async function(request, response){
     try{
 
         const userDatas = await GetUsers()
+
+        if(!userDatas){
+            return MessageResponse(response, 404, 'Data not found')
+        }
 
         return MessageResponse(response, 200, 'Gathering data success', userDatas)
 
@@ -21,10 +25,9 @@ service.get('/users/:id', async function(request, response){
     try{
         const userData = await GetUsersById(id)
 
-        if(IsInputNullOrEmpty(userData)){
+        if(!userData){
 
-            return MessageResponse(response, 404, 'Data not found', userData)
-            
+            return MessageResponse(response, 404, 'Data not found')
         }
         
         return MessageResponse(response, 200, 'Gathering data success', userData)
@@ -34,5 +37,6 @@ service.get('/users/:id', async function(request, response){
         return MessageResponse(response, 500, 'Something wrong with our server')
     }
 })
+
 
 module.exports = service

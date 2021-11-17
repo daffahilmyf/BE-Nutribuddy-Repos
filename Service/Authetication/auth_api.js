@@ -38,24 +38,45 @@ service.post('/register', async function(request, response){
     const {firstname, lastname, phone_number, email, password} = request.body
 
     try{
-        if(!IsInputNullOrEmpty(firstname, lastname, phone_number, email, password)){
 
-            if(!IsEmailValid(email)){
-                return MessageResponse(response, 406, 'Email is not valid')
-            }
-
-            const isRegistered = await RegisterRepos(firstname, lastname, phone_number, email, password)
-
-            if(!isRegistered){
-                return MessageResponse(response, 406, 'Account exist')
-            }
-
-            if(isRegistered){
-                return MessageResponse(response, 201, 'Register success', { firstname, lastname })
-            }
+        if(!firstname || !lastname || !phone_number || !email || !password){
+            return MessageResponse(response, 406, 'Cannot accept blank data')
         }
 
-        return MessageResponse(response, 406, 'Cannot accept blank data')
+        if(!IsEmailValid(email)){
+            return MessageResponse(response, 406, 'Email is not valid')
+        }
+
+        const isRegistered = await RegisterRepos(firstname, lastname, phone_number, email, password)
+
+        if(!isRegistered){
+            return MessageResponse(response, 406, 'Account exist')
+        }
+
+        if(isRegistered){
+            return MessageResponse(response, 201, 'Register success', { firstname, lastname })
+        }
+
+    }catch(error){
+        return MessageResponse(response, 500, 'Something wrong with our server')
+    }
+
+
+})
+
+service.post('/register-test', async function(request, response){
+    const {firstname, lastname, phone_number, email, password} = request.body
+
+    try{
+        const isRegistered = await RegisterRepos(firstname, lastname, phone_number, email, password)
+
+        if(!isRegistered){
+            return MessageResponse(response, 406, 'Account exist')
+        }
+
+        if(isRegistered){
+            return MessageResponse(response, 201, 'Register success', { firstname, lastname })
+        }
 
     }catch(error){
         return MessageResponse(response, 500, 'Something wrong with our server')
