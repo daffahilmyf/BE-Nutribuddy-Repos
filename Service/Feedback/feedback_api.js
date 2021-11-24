@@ -1,6 +1,6 @@
 const service = require('express').Router()
 const MessageResponse = require('../../Utils/Response/response.js')
-const { PostFeedbackData } = require('./feedback-repo.js')
+const { PostFeedbackData } = require('./feedback_repo.js')
 
 service.post('/feedback', async function(request, response){
     const {fullname, email, message} = request.body
