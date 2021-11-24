@@ -5,7 +5,7 @@ const MongoConn = require('./Utils/MongoDB/mongo-singleton.js')
 const MessageResponse = require('./Utils/Response/response.js')
 const API_V1 = require('./Router/API-V1/route_v1.js')
 const bodyParser = require('body-parser')
-const cors = require('cors')
+
 
 const server = express()
 const PORT = process.env.PORT || 5000
@@ -14,13 +14,6 @@ const dbConn = new MongoConn(process.env.NODE_ENV)
 server.use(morgan('myFormat'))
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))
-server.use(cors({
-    origin: '*'
-}))
-server.use((req, res, next)=>{
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Origin", "Origin, X-Requested-With, Content-Type, Accept")
-})
 server.use('/', API_V1)
 
 server.get('/', (req, res)=>{
