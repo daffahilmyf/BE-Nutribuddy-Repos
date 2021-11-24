@@ -1,17 +1,18 @@
 const feedbackDB = require('../../Model/feedback_model.js')
 
-async function FeedbackRepos(fullname, email, message){
-    
+
+async function PostFeedbackData(fullname, email, message){
+
     const feedbackData = new feedbackDB({
         fullname: fullname,
         email: email,
         message: message
     })
 
-    feedbackData.save()
-
+    await feedbackData.save()
+  
     return feedbackData
 }
 
+module.exports = {PostFeedbackData}
 
-module.exports = { FeedbackRepos }
